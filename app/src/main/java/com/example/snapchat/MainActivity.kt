@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +48,11 @@ class MainActivity : AppCompatActivity() {
                     auth.createUserWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString()).addOnCompleteListener(this) { task ->
                         if(task.isSuccessful){
                             // Add to database
-                            logIn()
+                                //-----------firebase database ----------------------
+                                    // Edit your rules and you can start your database.
+                                        // toString() in the below line it's doesn't matters you can play with your database.
+                                        FirebaseDatabase.getInstance().getReference().child("users").child(task.result?.user?.uid.toString()).child("email").setValue(emailEditText?.text.toString())
+                                    logIn()
                         } else {
                             Toast.makeText(this,"Login Failed. Try Again",Toast.LENGTH_SHORT).show()
                         }

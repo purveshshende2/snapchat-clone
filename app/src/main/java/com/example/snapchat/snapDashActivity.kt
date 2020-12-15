@@ -1,5 +1,6 @@
 package com.example.snapchat
 
+
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,6 +15,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
@@ -21,6 +23,9 @@ import java.io.ByteArrayOutputStream
 import java.lang.Exception
 import java.util.*
 import java.util.jar.Manifest
+
+private val UploadTask.TaskSnapshot.downloadUrl: Any
+    get() = Unit ///-------------------------------for uploading images to firebase cloud storage
 
 class snapDashActivity : AppCompatActivity() {
 
@@ -81,28 +86,29 @@ class snapDashActivity : AppCompatActivity() {
     }
 
 
-    fun nextClicked (view: View){
-        // Get the data from an ImageView as bytes
-        snapDashImageView?.isDrawingCacheEnabled = true
+    fun nextClicked(view: View) {
+
+        snapDashImageView?.setDrawingCacheEnabled(true)
         snapDashImageView?.buildDrawingCache()
-        val bitmap = (snapDashImageView?.drawable as BitmapDrawable).bitmap
+        val bitmap = snapDashImageView?.getDrawingCache()
         val baos = ByteArrayOutputStream()
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
 
-        //FirebaseStorage.getInstance().getReference().child("images").child(imageName)
-        //Make a replace of mountainsRef and storage .
 
         val uploadTask = FirebaseStorage.getInstance().getReference().child("images").child(imageName).putBytes(data)
-        uploadTask.addOnFailureListener {
+        uploadTask.addOnFailureListener(OnFailureListener {
             // Handle unsuccessful uploads
-
-            Toast.makeText(this, "Upload Failed", Toast.LENGTH_SHORT).show()
-        }.addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
+            Toast.makeText(this,"UploadFailed",Toast.LENGTH_SHORT).show()
+        }).addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
             val downloadUrl = taskSnapshot.downloadUrl
             Log.i("URL", downloadUrl.toString())
+
+            val intent = Intent(this,ChooseUserActivity::class.java)
+            startActivity(intent)
         })
+
     }
 }
