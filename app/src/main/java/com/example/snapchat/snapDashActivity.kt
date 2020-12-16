@@ -105,7 +105,6 @@ class snapDashActivity : AppCompatActivity() {
             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
             val downloadUrl = taskSnapshot.downloadUrl
             Log.i("URL", downloadUrl.toString())
-
             val intent = Intent(this,ChooseUserActivity::class.java)
             startActivity(intent)
         })
