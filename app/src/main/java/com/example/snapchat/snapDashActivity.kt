@@ -106,6 +106,11 @@ class snapDashActivity : AppCompatActivity() {
             val downloadUrl = taskSnapshot.downloadUrl
             Log.i("URL", downloadUrl.toString())
             val intent = Intent(this,ChooseUserActivity::class.java)
+            //---------------------------------------------
+            intent.putExtra("imageUrl",downloadUrl.toString())
+            intent.putExtra("imageName",imageName)
+            intent.putExtra("message",messageEditText.toString())
+
             startActivity(intent)
         })
 
