@@ -25,7 +25,7 @@ class ChooseUserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_choose_user)
 
         chooseUserListView = findViewById(R.id.chooseUserListView)
-        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,emails)
+        val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,this.emails)
         chooseUserListView?.adapter = adapter
 
 
@@ -49,7 +49,7 @@ class ChooseUserActivity : AppCompatActivity() {
         })
 
         chooseUserListView?.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, i, l ->
-            val snapMap: Map<String,String> = mapOf("from" to FirebaseAuth.getInstance().currentUser!!.email!!,"imageName" to intent.getStringExtra("imageName"),"imageUrl" to intent.getStringExtra("imageUrl"),"message" to intent.getStringExtra("message"))
+            val snapMap: Map<String,String?> = mapOf("from" to FirebaseAuth.getInstance().currentUser!!.email!!,"imageName" to intent.getStringExtra("imageName"),"imageUrl" to intent.getStringExtra("imageUrl"),"message" to intent.getStringExtra("message"))
 
 
 
@@ -57,8 +57,6 @@ class ChooseUserActivity : AppCompatActivity() {
             FirebaseDatabase.getInstance().getReference().child("users").child(keys.get(i)).child("snaps").push().setValue(snapMap)
             //for sending back
             val intent = Intent(this,snapsActivity::class.java)
-
-
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) //says wipe everything out of you know the back btn history
             startActivity(intent)
