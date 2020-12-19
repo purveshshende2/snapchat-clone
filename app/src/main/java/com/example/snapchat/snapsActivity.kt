@@ -8,6 +8,10 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
 class snapsActivity : AppCompatActivity() {
@@ -24,6 +28,20 @@ class snapsActivity : AppCompatActivity() {
 
         val adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,emails)
         snapsListView?.adapter = adapter
+
+        FirebaseDatabase.getInstance().getReference().child("users").child(auth.currentUser?.uid!!).child("snaps").addChildEventListener(object : ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                emails.add(snapshot.child("from").value as String)
+                adapter.notifyDataSetChanged()
+
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

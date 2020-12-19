@@ -22,6 +22,7 @@ class ChooseUserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_choose_user)
 
         chooseUserListView = findViewById(R.id.chooseUserListView)
