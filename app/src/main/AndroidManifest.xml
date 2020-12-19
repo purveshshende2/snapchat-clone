@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Snapchat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChooseUserActivity"></activity>
+        <activity android:name=".ViewSnapActivity"></activity>
+        <activity android:name=".ChooseUserActivity" />
         <activity android:name=".snapDashActivity" />
         <activity android:name=".snapsActivity" />
         <activity android:name=".MainActivity">
