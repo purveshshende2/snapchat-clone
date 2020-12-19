@@ -7,6 +7,7 @@
     tools:context=".ChooseUserActivity">
 
     <ListView
+        android:id="@+id/chooseUserListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -14,10 +15,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ListView
-            android:id="@+id/chooseUserListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>
