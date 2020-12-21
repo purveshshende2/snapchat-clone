@@ -43,7 +43,7 @@ class ViewSnapActivity : AppCompatActivity() {
         val task = ImageDownloader()
         val myImage: Bitmap
         try {
-            myImage = task.execute(intent.getStringExtra("imageUrl")).get()
+            myImage = task.execute(intent.getStringExtra("imageURL")).get()
 
             snapImageView?.setImageBitmap(myImage)
         }catch (e:Exception){

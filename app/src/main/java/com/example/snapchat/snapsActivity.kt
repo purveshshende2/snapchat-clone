@@ -34,7 +34,7 @@ class snapsActivity : AppCompatActivity() {
 
         FirebaseDatabase.getInstance().getReference().child("users").child(auth.currentUser?.uid!!).child("snaps").addChildEventListener(object : ChildEventListener{
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                emails.add(snapshot.child("from").value as String)
+                emails.add(snapshot.child("from")?.value as String)
                 snaps.add(snapshot!!)
                 adapter.notifyDataSetChanged()
 
@@ -49,7 +49,7 @@ class snapsActivity : AppCompatActivity() {
                 var index = 0 // For knowing the snap
 
                 for (snap:DataSnapshot in snaps) {
-                    if (snap.key == snapshot?.key){
+                    if (snap.key == snapshot.key){
                         snaps.removeAt(index)
                         emails.removeAt(index)
                     }
@@ -67,9 +67,11 @@ class snapsActivity : AppCompatActivity() {
             var intent = Intent(this,ViewSnapActivity::class.java)
 
             intent.putExtra("imageName",snapshot.child("imageName").value as String)
-            intent.putExtra("imageUrl",snapshot.child("imageUrl").value as String)
-            intent.putExtra("message",snapshot.child("imageUrl").value as String)
+            intent.putExtra("imageURL",snapshot.child("imageURL").value as String)
+            intent.putExtra("message",snapshot.child("message").value as String)
             intent.putExtra("snapKey",snapshot.key)
+
+            startActivity(intent)
 
         }
     }
